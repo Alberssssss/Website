@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:controller="com.example.demo.controller.DashboardController"
+      xmlns="http://javafx.com/javafx/17.0.2"
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="10">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label fx:id="welcomeLabel" style="-fx-font-size:16px; -fx-font-weight:bold;"/>
+
+    <Label text="公告：" style="-fx-font-size:14px;"/>
+    <TextArea fx:id="announcementsArea" prefHeight="100" wrapText="true" editable="false"/>
+
+    <Label text="我的成绩：" style="-fx-font-size:14px;"/>
+    <TextArea fx:id="gradesArea" prefHeight="100" editable="false"/>
+
+    <HBox spacing="5">
+        <TextField fx:id="courseField" promptText="课程名称"/>
+        <TextField fx:id="scoreField" promptText="成绩"/>
+        <Button text="上传成绩" onAction="#handleUploadGrade"/>
+    </HBox>
+
+    <Label fx:id="statusLabel" textFill="green"/>
+
+    <Button text="退出登录" onAction="#handleLogout"/>
+</VBox>
