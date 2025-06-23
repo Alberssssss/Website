@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>留学申请系统</title>
+  <!-- Bootstrap CDN -->
+  <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+  <!-- 自定义样式 -->
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<!-- 顶部导航 -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" href="#">留学申请</a>
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="#">首页</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">项目介绍</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">院校列表</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">联系我们</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- 静态大图 Banner (来自第二部分示例) -->
+<div class="container-fluid px-0">
+  <img th:src="@{/images/banner1.jpg}" alt="Banner" style="width:100%; display:block;"/>
+</div>
+
+<!-- 轮播图 (可选，若保留则显示多图切换) -->
+<div id="mainCarousel" class="carousel slide mt-3" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active"
+         style="height: 400px; background: url('/images/banner1.jpg') center/cover;">
+    </div>
+    <div class="carousel-item"
+         style="height: 400px; background: url('/images/banner2.jpg') center/cover;">
+    </div>
+    <div class="carousel-item"
+         style="height: 400px; background: url('/images/banner3.jpg') center/cover;">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button"
+          data-bs-target="#mainCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button"
+          data-bs-target="#mainCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+<!-- 核心内容区 -->
+<div class="container my-5">
+  <div class="row">
+    <!-- 最新公告区 -->
+    <div class="col-md-8">
+      <h4>最新公告</h4>
+      <ul class="list-group">
+        <li class="list-group-item">• 系统已升级，欢迎体验！</li>
+        <li class="list-group-item">• 2025 届申请已开放报名。</li>
+        <!-- 动态公告示例： -->
+        <!--
+        <li class="list-group-item"
+            th:each="ann : ${announcements}"
+            th:text="${ann.content}">公告内容</li>
+        -->
+      </ul>
+    </div>
+    <!-- 用户登录/注册区 -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5 class="card-title">用户登录 / 注册</h5>
+          <a href="/login" class="btn btn-primary w-100 mb-2">登录</a>
+          <a href="/register" class="btn btn-outline-secondary w-100">注册</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 页脚 -->
+<footer class="bg-light text-center py-3">
+  © 2025 大学申请系统
+</footer>
+
+<!-- Bootstrap JS Bundle -->
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+</script>
+<!-- 自定义脚本 -->
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
