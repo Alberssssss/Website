@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>管理员 – 公告管理</title></head>
+<body>
+<h1 th:text="${adminWelcome}">管理员，欢迎！</h1>
+
+<div th:if="${error}" style="color:red" th:text="${error}"></div>
+<div th:if="${success}" style="color:green" th:text="${success}"></div>
+
+<form th:action="@{/admin/post}" method="post">
+  <textarea name="content" rows="3" cols="50" placeholder="输入公告内容"></textarea><br/>
+  <button type="submit">发布公告</button>
+</form>
+
+<h2>所有公告</h2>
+<ul>
+  <li th:each="ann : ${announcements}"
+      th:text="${#dates.format(ann.createdTime, 'yyyy-MM-dd HH:mm')} + ' - ' + ann.content">
+    公告内容示例
+  </li>
+  <li th:if="${announcements.size() == 0}">（暂无公告）</li>
+</ul>
+</body>
+</html>

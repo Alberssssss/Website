@@ -5,84 +5,89 @@ import com.example.demo.model.Grade;
 import com.example.demo.model.User;
 import com.example.demo.repository.AnnouncementRepository;
 import com.example.demo.repository.GradeRepository;
-import com.example.demo.AppContext;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import java.io.IOException;
-@Component @Scope("prototype")
+
+@Controller
+@RequestMapping("/dashboard")
+@SessionAttributes("currentUser")  // 假设登录时把 User 放入了 session
 public class DashboardController {
-    @FXML private Label welcomeLabel;
-    @FXML private TextArea announcementsArea;
-    @FXML private TextArea gradesArea;
-    @FXML private TextField courseField;
-    @FXML private TextField scoreField;
-    @FXML private Label statusLabel;
-    @Autowired private AnnouncementRepository announcementRepo;
-    @Autowired private GradeRepository gradeRepo;
 
-    private Stage stage;
-    private User user;
+    @Autowired
+    private AnnouncementRepository announcementRepo;
 
-    public void setStage(Stage stage) { this.stage = stage; }
-    public void setUser(User user) { this.user = user; }
+    @Autowired
+    private GradeRepository gradeRepo;
 
-    public void onLoaded() {
-        welcomeLabel.setText("欢迎, " + user.getUsername() + "!");
+    /**
+     * 在登录后，需要把当前用户放到 Session 中。例如 LoginController 登录成功后：
+     *   redirectAttributes.addFlashAttribute("currentUser", user);
+     * 这里使用 @SessionAttributes("currentUser") 来保持它在会话里。
+     */
+
+    @ModelAttribute("currentUser")
+    public User currentUser() {
+        // 如果 session 中没有 currentUser，会调用此方法返回 null，
+        // 实际项目中可以抛异常或跳转到登录页。
+        return null;
+    }
+
+    /**
+     * GET /dashboard
+     * 显示用户仪表盘，包含欢迎语、公告列表、当前用户的成绩
+     */
+    @GetMapping
+    public String showDashboard(@ModelAttribute("currentUser") User user, Model model) {
+        // 欢迎语
+        model.addAttribute("welcome", "欢迎, " + user.getUsername() + "！");
+        // 公告列表
         List<Announcement> anns = announcementRepo.findAll();
-        String annText = anns.isEmpty() ? "（暂无公告）" :
-            anns.stream().map(a -> "• " + a.getContent() + " (" + a.getCreatedTime() + ")")
-                .collect(Collectors.joining("\n"));
-        announcementsArea.setText(annText);
-
+        model.addAttribute("announcements", anns);
+        // 该用户的成绩列表
         List<Grade> grades = gradeRepo.findAll().stream()
-            .filter(g -> g.getUser().getId().equals(user.getId()))
-            .collect(Collectors.toList());
-        String gradeText = grades.isEmpty() ? "（尚未上传成绩）" :
-            grades.stream().map(g -> g.getCourse() + ": " + g.getScore())
-                .collect(Collectors.joining("\n"));
-        gradesArea.setText(gradeText);
+                .filter(g -> g.getUser().getId().equals(user.getId()))
+                .collect(Collectors.toList());
+        model.addAttribute("grades", grades);
+        return "dashboard";  // 对应 templates/dashboard.html
     }
 
-    @FXML
-    private void handleUploadGrade() {
-        String course = courseField.getText().trim();
-        String scoreTxt = scoreField.getText().trim();
-        if (course.isEmpty() || scoreTxt.isEmpty()) {
-            statusLabel.setText("课程和成绩不能为空");
-            return;
+    /**
+     * POST /dashboard/upload
+     * 处理成绩上传表单
+     */
+    @PostMapping("/upload")
+    public String uploadGrade(@RequestParam("course") String course,
+                              @RequestParam("score") String scoreText,
+                              @ModelAttribute("currentUser") User user,
+                              Model model) {
+        // 重用 GET 方法的模型数据
+        showDashboard(user, model);
+
+        // 验证输入
+        if (course == null || course.trim().isEmpty() ||
+                scoreText == null || scoreText.trim().isEmpty()) {
+            model.addAttribute("error", "课程和成绩不能为空");
+            return "dashboard";
         }
         try {
-            Double score = Double.parseDouble(scoreTxt);
-            Grade grade = new Grade(user, course, score);
-            gradeRepo.save(grade);
-            statusLabel.setText("成绩已上传!");
-            onLoaded();
-            courseField.clear();
-            scoreField.clear();
+            Double score = Double.parseDouble(scoreText.trim());
+            gradeRepo.save(new Grade(user, course.trim(), score));
+            model.addAttribute("success", "成绩已上传！");
         } catch (NumberFormatException e) {
-            statusLabel.setText("成绩请输入数字");
+            model.addAttribute("error", "成绩请输入数字");
         }
-    }
 
-    @FXML
-    private void handleLogout() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
-            loader.setControllerFactory(AppContext.getContext()::getBean);
-            Parent root = loader.load();
-            LoginController ctrl = loader.getController();
-            ctrl.setStage(stage);
-            stage.setScene(new Scene(root));
-        } catch (IOException e) { e.printStackTrace(); }
+        // 刷新成绩列表
+        List<Grade> grades = gradeRepo.findAll().stream()
+                .filter(g -> g.getUser().getId().equals(user.getId()))
+                .collect(Collectors.toList());
+        model.addAttribute("grades", grades);
+
+        return "dashboard";
     }
 }

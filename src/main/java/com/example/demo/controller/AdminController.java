@@ -1,80 +1,52 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Announcement;
-import com.example.demo.model.User;
 import com.example.demo.repository.AnnouncementRepository;
-import com.example.demo.AppContext;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import java.io.IOException;
-@Component @Scope("prototype")
+
+@Controller
+@RequestMapping("/admin")
 public class AdminController {
-    @FXML private Label adminWelcomeLabel;
-    @FXML private TextArea announcementContentArea;
-    @FXML private TextArea allAnnouncementsArea;
-    @FXML private Label statusLabel;
-    @Autowired private AnnouncementRepository announcementRepo;
 
-    private Stage stage;
-    private User adminUser;
+    @Autowired
+    private AnnouncementRepository announcementRepo;
 
-    public void setStage(Stage stage) { this.stage = stage; }
-    public void setUser(User user) {
-        this.adminUser = user;
-        adminWelcomeLabel.setText("管理员 " + user.getUsername() + "，欢迎!");
-        loadAnnouncements();
-    }
-
-    @FXML
-    private void initialize() { statusLabel.setText(""); }
-
-    @FXML
-    private void handlePostAnnouncement() {
-        String content = announcementContentArea.getText().trim();
-        if (content.isEmpty()) {
-            statusLabel.setText("公告内容不能为空");
-            return;
-        }
-        Announcement ann = new Announcement(content);
-        announcementRepo.save(ann);
-        statusLabel.setText("公告已发布");
-        announcementContentArea.clear();
-        loadAnnouncements();
-    }
-
-    private void loadAnnouncements() {
+    /**
+     * 显示管理员公告页面
+     */
+    @GetMapping
+    public String adminPage(Model model) {
+        // 欢迎信息（可从 SecurityContext 或 Session 拿到当前用户）
+        model.addAttribute("adminWelcome", "管理员，欢迎！");
+        // 加载公告列表
         List<Announcement> all = announcementRepo.findAll();
-        if (all.isEmpty()) {
-            allAnnouncementsArea.setText("（暂无公告）");
-        } else {
-            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            String text = all.stream()
-                .map(a -> "[" + a.getCreatedTime().format(fmt) + "] " + a.getContent())
-                .collect(Collectors.joining("\n"));
-            allAnnouncementsArea.setText(text);
-        }
+        model.addAttribute("announcements", all);
+        return "admin";  // 渲染 src/main/resources/templates/admin.html
     }
 
-    @FXML
-    private void handleLogout() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
-            loader.setControllerFactory(AppContext.getContext()::getBean);
-            Parent root = loader.load();
-            LoginController ctrl = loader.getController();
-            ctrl.setStage(stage);
-            stage.setScene(new Scene(root));
-        } catch (IOException e) { e.printStackTrace(); }
+    /**
+     * 发布新公告
+     */
+    @PostMapping("/post")
+    public String postAnnouncement(@RequestParam("content") String content,
+                                   Model model) {
+        // 基本校验
+        if (content == null || content.trim().isEmpty()) {
+            model.addAttribute("error", "公告内容不能为空");
+        } else {
+            announcementRepo.save(new Announcement(content.trim()));
+            model.addAttribute("success", "公告已发布");
+        }
+        // 重新加载公告列表并返回页面
+        List<Announcement> all = announcementRepo.findAll();
+        model.addAttribute("announcements", all);
+        model.addAttribute("adminWelcome", "管理员，欢迎！");
+        return "admin";
     }
 }
