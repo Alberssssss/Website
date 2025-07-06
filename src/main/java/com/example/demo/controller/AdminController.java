@@ -37,6 +37,7 @@ public class AdminController {
     public String postAnnouncement(@RequestParam("content") String content,
                                    Model model) {
         // 基本校验
+
         if (content == null || content.trim().isEmpty()) {
             model.addAttribute("error", "公告内容不能为空");
         } else {
