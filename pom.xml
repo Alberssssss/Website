@@ -17,8 +17,10 @@
     <packaging>jar</packaging>
 
     <properties>
-        <!--仅需指定 Java 版本-->
+        <!-- Java 版本 -->
         <java.version>17</java.version>
+        <!-- 构建时间格式 -->
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
     </properties>
 
     <dependencies>
@@ -27,27 +29,23 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-        <!-- 数据访问和 JPA 支持 -->
+        <!-- JPA & 数据库访问 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-
         <!-- Thymeleaf 模板引擎 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-
-        <!-- H2 内存数据库（开发时使用，生产可替换为 MySQL 驱动） -->
+        <!-- H2 内存数据库（开发时用） -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-
-        <!-- 如果你在生产环境使用 MySQL，请添加如下依赖并移除 H2 -->
+        <!-- 生产环境换成 MySQL 时，启用下面这段，并移除 H2 依赖 -->
         <!--
         <dependency>
             <groupId>mysql</groupId>
@@ -58,11 +56,41 @@
     </dependencies>
 
     <build>
+        <!-- 资源目录配置：只过滤 version.properties -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>version.properties</include>
+                </includes>
+            </resource>
+        </resources>
+
         <plugins>
             <!-- Spring Boot Maven 插件，用于打包可执行 Jar -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- 资源过滤插件，在 process-resources 阶段替换占位符 -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>filter-version</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>resources</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

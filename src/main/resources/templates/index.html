@@ -92,6 +92,7 @@
 <!-- 页脚 -->
 <footer class="bg-light text-center py-3">
   © 2025 大学申请系统
+  <span th:text="'v' + ${appVersion} + ' (built at ' + ${buildTime} + ')'"></span>
 </footer>
 
 <!-- Bootstrap JS Bundle -->
