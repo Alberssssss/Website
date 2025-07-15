@@ -45,29 +45,24 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <!-- 生产环境换成 MySQL 时，启用下面这段，并移除 H2 依赖 -->
-        <!--
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        -->
     </dependencies>
 
     <build>
-        <!-- 资源目录配置：只过滤 version.properties -->
+        <!-- 资源目录配置：排除 version.properties 的“普通复制”，单独过滤它 -->
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>version.properties</exclude>
+                </excludes>
                 <filtering>false</filtering>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
-                <filtering>true</filtering>
                 <includes>
                     <include>version.properties</include>
                 </includes>
+                <filtering>true</filtering>
             </resource>
         </resources>
 
@@ -78,13 +73,13 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- 资源过滤插件，在 process-resources 阶段替换占位符 -->
+            <!-- 资源过滤插件：在 process-resources 阶段对 version.properties 做替换 -->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.3.1</version>
                 <executions>
                     <execution>
-                        <id>filter-version</id>
+                        <id>filter-resources</id>
                         <phase>process-resources</phase>
                         <goals>
                             <goal>resources</goal>
