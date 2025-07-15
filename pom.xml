@@ -48,7 +48,7 @@
     </dependencies>
 
     <build>
-        <!-- 资源目录配置：排除 version.properties 的“普通复制”，单独过滤它 -->
+        <!-- 先排除掉所有普通资源里的 version.properties -->
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -57,6 +57,7 @@
                 </excludes>
                 <filtering>false</filtering>
             </resource>
+            <!-- 单独把 version.properties 作为“要过滤”的资源 -->
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
@@ -67,19 +68,19 @@
         </resources>
 
         <plugins>
-            <!-- Spring Boot Maven 插件，用于打包可执行 Jar -->
+            <!-- Spring Boot 可执行 Jar 打包 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- 资源过滤插件：在 process-resources 阶段对 version.properties 做替换 -->
+            <!-- 让 Maven 在 process-resources 阶段真正替换占位符 -->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.3.1</version>
                 <executions>
                     <execution>
-                        <id>filter-resources</id>
+                        <id>filter-version</id>
                         <phase>process-resources</phase>
                         <goals>
                             <goal>resources</goal>
