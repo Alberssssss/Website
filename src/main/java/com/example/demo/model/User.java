@@ -14,17 +14,22 @@ public class User {
     @Column(unique = true, nullable = false)
     private String username;
     private String password;
-    private boolean admin;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    private String fullName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Grade> grades = new HashSet<>();
 
     public User() {}
 
-    public User(String username, String password, boolean admin) {
+    public User(String username, String password, Role role, String fullName) {
         this.username = username;
         this.password = password;
-        this.admin = admin;
+        this.role = role;
+        this.fullName = fullName;
     }
 
     // ===== Getters and Setters =====
@@ -53,12 +58,20 @@ public class User {
         this.password = password;
     }
 
-    public boolean isAdmin() {
-        return admin;
+    public Role getRole() {
+        return role;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Set<Grade> getGrades() {

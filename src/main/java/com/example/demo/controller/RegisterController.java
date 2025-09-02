@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,13 @@ public class RegisterController {
      */
     @PostMapping("/register")
     public String doRegister(@RequestParam("username") String username,
+                             @RequestParam("fullName") String fullName,
                              @RequestParam("password") String password,
                              @RequestParam("confirm")  String confirm,
                              Model model) {
         // 基本校验
         if (username == null || username.trim().isEmpty() ||
+                fullName == null || fullName.trim().isEmpty() ||
                 password == null || password.isEmpty() ||
                 confirm == null || confirm.isEmpty()) {
             model.addAttribute("error", "请填写所有字段");
@@ -47,14 +50,10 @@ public class RegisterController {
             return "register";
         }
 
-        // 判断是否第一个注册用户 → 管理员
-        boolean isAdmin = (userRepository.count() == 0);
-        User user = new User(username.trim(), password, isAdmin);
+        User user = new User(username.trim(), password, Role.STUDENT, fullName.trim());
         userRepository.save(user);
 
-        // 注册成功后跳转到登录页，并带上提示
-        model.addAttribute("message",
-                isAdmin ? "注册成功！(管理员创建)，请登录" : "注册成功！现在可以登录");
+        model.addAttribute("message", "注册成功！现在可以登录");
         return "login";    // 对应登录模板 login.html
     }
 }
