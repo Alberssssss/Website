@@ -52,7 +52,13 @@
             <artifactId>mysql-connector-j</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
+
 
     <build>
         <!-- 先排除掉所有普通资源里的 version.properties -->
