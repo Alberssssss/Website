@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.LoginRecord;
 import com.example.demo.model.User;
+import com.example.demo.repository.LoginRecordRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,9 @@ public class LoginController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private LoginRecordRepository loginRecordRepository;
 
     // 显示登录页
     @GetMapping("/login")
@@ -26,15 +31,18 @@ public class LoginController {
                           Model model) {
         if (username.isEmpty() || password.isEmpty()) {
             model.addAttribute("error", "请输入用户名和密码");
+            loginRecordRepository.save(new LoginRecord(username, false));
             return "login";
         }
         return userRepository.findByUsername(username)
                 .filter(u -> u.getPassword().equals(password))
                 .map(user -> {
+                    loginRecordRepository.save(new LoginRecord(username, true));
                     if (user.isAdmin()) return "redirect:/admin";
                     else return "redirect:/dashboard";
                 })
                 .orElseGet(() -> {
+                    loginRecordRepository.save(new LoginRecord(username, false));
                     model.addAttribute("error", "用户名或密码错误");
                     return "login";
                 });
