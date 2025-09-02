@@ -23,7 +23,6 @@
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
     </properties>
 
-
     <dependencies>
         <!-- Spring Web MVC -->
         <dependency>
