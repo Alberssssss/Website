@@ -7,6 +7,11 @@
   <div th:if="${error}" th:text="${error}" style="color:red"></div>
   用户名: <input type="text" name="username"/><br/>
   密码: <input type="password" name="password"/><br/>
+  角色: <select name="role">
+          <option value="STUDENT">学生</option>
+          <option value="TEACHER">老师</option>
+          <option value="ADMIN">管理员</option>
+        </select><br/>
   <button type="submit">登录</button>
 </form>
 <a th:href="@{/register}">注册新用户</a>

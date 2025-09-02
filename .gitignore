@@ -1,6 +1,0 @@
-# Maven target directory
-/target/
-/.idea/
-/*.iml
-*.log
-/data/

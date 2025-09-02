@@ -45,13 +45,6 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-
-        <!-- MySQL 驱动，用于连接云端数据库 -->
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <scope>runtime</scope>
-        </dependency>
     </dependencies>
 
     <build>
@@ -75,14 +68,22 @@
         </resources>
 
         <plugins>
+            <!-- Spring Boot 可执行 Jar 打包 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- 让 Maven 在 process-resources 阶段真正替换占位符 -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
+                        <id>filter-version</id>
+                        <phase>process-resources</phase>
                         <goals>
-                            <goal>repackage</goal>
-                            <goal>build-info</goal>
+                            <goal>resources</goal>
                         </goals>
                     </execution>
                 </executions>

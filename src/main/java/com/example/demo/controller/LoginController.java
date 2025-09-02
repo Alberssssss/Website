@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.LoginRecord;
+import com.example.demo.model.Role;
 import com.example.demo.model.User;
+import com.example.demo.repository.LoginRecordRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,9 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private LoginRecordRepository loginRecordRepository;
+
     // 显示登录页
     @GetMapping("/login")
     public String loginForm() {
@@ -23,19 +29,33 @@ public class LoginController {
     @PostMapping("/login")
     public String doLogin(@RequestParam String username,
                           @RequestParam String password,
+                          @RequestParam String role,
                           Model model) {
-        if (username.isEmpty() || password.isEmpty()) {
-            model.addAttribute("error", "请输入用户名和密码");
+        if (username.isEmpty() || password.isEmpty() || role.isEmpty()) {
+            model.addAttribute("error", "请输入完整信息");
+            loginRecordRepository.save(new LoginRecord(username, false));
             return "login";
         }
+        Role reqRole;
+        try {
+            reqRole = Role.valueOf(role.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", "角色选择无效");
+            loginRecordRepository.save(new LoginRecord(username, false));
+            return "login";
+        }
+        Role finalReqRole = reqRole;
         return userRepository.findByUsername(username)
-                .filter(u -> u.getPassword().equals(password))
+                .filter(u -> u.getPassword().equals(password) && u.getRole() == finalReqRole)
                 .map(user -> {
-                    if (user.isAdmin()) return "redirect:/admin";
-                    else return "redirect:/dashboard";
+                    loginRecordRepository.save(new LoginRecord(username, true));
+                    if (finalReqRole == Role.ADMIN) return "redirect:/admin";
+                    if (finalReqRole == Role.TEACHER) return "redirect:/teacher";
+                    return "redirect:/dashboard";
                 })
                 .orElseGet(() -> {
-                    model.addAttribute("error", "用户名或密码错误");
+                    loginRecordRepository.save(new LoginRecord(username, false));
+                    model.addAttribute("error", "用户名、密码或角色不正确");
                     return "login";
                 });
     }
