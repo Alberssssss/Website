@@ -92,9 +92,10 @@
 
 <!-- 页脚 -->
 <footer class="bg-light text-center py-3">
-  © 2025 大学申请系统 v<span th:text="${appVersion}"></span>
-  (build <span th:text="${#temporals.format(buildTime, 'yyyy-MM-dd HH:mm:ss')}"></span>)
-</footer>
+  © 2025 大学申请系统
+  <span th:text="'v' + ${versionInfo.version}"></span>
+  (build <span th:text="${versionInfo.buildTime}"></span>)
+</footer></footer>
 
 <!-- Bootstrap JS Bundle -->
 <script
