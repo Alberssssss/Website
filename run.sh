@@ -24,7 +24,7 @@ fi
 mkdir -p logs
 
 echo "🚀 启动新服务: java -jar $JAR_FILE"
-nohup java -jar "$JAR_FILE" > logs/out.log 2>&1 &
+nohup sudo java -jar "$JAR_FILE" > logs/out.log 2>&1 &
 
 NEW_PID=$!
 echo "✅ 服务已启动 (PID=$NEW_PID)，日志：$APP_DIR/logs/out.log"
