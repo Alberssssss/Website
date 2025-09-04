@@ -18,7 +18,7 @@ OLD_PIDS=$(pgrep -f "$JAR_FILE")
 if [ -n "$OLD_PIDS" ]; then
   echo "🛑 停掉旧进程 (PID=$OLD_PIDS)"
   for OLD_PID in $OLD_PIDS; do
-    kill -9 "$OLD_PID"
+    sudo kill -9 "$OLD_PID"
     sleep 2
   done
 fi
