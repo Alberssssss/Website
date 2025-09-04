@@ -14,11 +14,13 @@ fi
 echo "🟢 部署目录: $APP_DIR"
 echo "📦 部署 Jar: $JAR_FILE"
 
-OLD_PID=$(pgrep -f "$JAR_FILE")
-if [ -n "$OLD_PID" ]; then
-  echo "🛑 停掉旧进程 (PID=$OLD_PID)"
-  kill "$OLD_PID"
-  sleep 2
+OLD_PIDS=$(pgrep -f "$JAR_FILE")
+if [ -n "$OLD_PIDS" ]; then
+  echo "🛑 停掉旧进程 (PID=$OLD_PIDS)"
+  for OLD_PID in $OLD_PIDS; do
+    kill -9 "$OLD_PID"
+    sleep 2
+  done
 fi
 
 mkdir -p logs
