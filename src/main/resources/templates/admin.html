@@ -12,7 +12,7 @@
   <button type="submit">发布公告</button>
 </form>
 
-<h2>所有公告</h2>
+<h2>所有公告:</h2>
 <ul>
   <li th:each="ann : ${announcements}"
       th:text="${#dates.format(ann.createdTime, 'yyyy-MM-dd HH:mm')} + ' - ' + ann.content">
