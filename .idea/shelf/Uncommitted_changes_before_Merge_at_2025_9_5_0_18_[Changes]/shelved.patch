@@ -1,0 +1,19 @@
+Index: src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>spring.datasource.url=${DB_URL:jdbc:mysql://localhost:3306/grades_app?useSSL=false&serverTimezone=UTC}\r\nspring.datasource.driver-class-name=${DB_DRIVER:com.mysql.cj.jdbc.Driver}\r\nspring.datasource.username=${DB_USERNAME:root}\r\nspring.datasource.password=${DB_PASSWORD:Lth20051226!}\r\nspring.jpa.hibernate.ddl-auto=update\r\nspring.jpa.database-platform=${DB_DIALECT:org.hibernate.dialect.MySQLDialect}\r\nserver.port=443\r\nserver.ssl.enabled=true\r\nserver.ssl.key-store=classpath:ssl/lxpass.com.jks\r\nserver.ssl.key-store-password=dso4jayj\r\nserver.ssl.key-store-type=JKS\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/src/main/resources/application.properties b/src/main/resources/application.properties
+--- a/src/main/resources/application.properties	(revision a33e6ce8d608bc268aee9b1015e16f8d8f61c93a)
++++ b/src/main/resources/application.properties	(date 1757045885455)
+@@ -1,7 +1,7 @@
+ spring.datasource.url=${DB_URL:jdbc:mysql://localhost:3306/grades_app?useSSL=false&serverTimezone=UTC}
+ spring.datasource.driver-class-name=${DB_DRIVER:com.mysql.cj.jdbc.Driver}
+ spring.datasource.username=${DB_USERNAME:root}
+-spring.datasource.password=${DB_PASSWORD:Lth20051226!}
++spring.datasource.password=${DB_PASSWORD:}
+ spring.jpa.hibernate.ddl-auto=update
+ spring.jpa.database-platform=${DB_DIALECT:org.hibernate.dialect.MySQLDialect}
+ server.port=443
