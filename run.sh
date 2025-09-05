@@ -14,19 +14,17 @@ fi
 echo "🟢 部署目录: $APP_DIR"
 echo "📦 部署 Jar: $JAR_FILE"
 
-OLD_PIDS=$(pgrep -f "$JAR_FILE")
-if [ -n "$OLD_PIDS" ]; then
-  echo "🛑 停掉旧进程 (PID=$OLD_PIDS)"
-  for OLD_PID in $OLD_PIDS; do
-    sudo kill -9 "$OLD_PID"
-    sleep 2
-  done
+OLD_PID=$(pgrep -f "$JAR_FILE")
+if [ -n "$OLD_PID" ]; then
+  echo "🛑 停掉旧进程 (PID=$OLD_PID)"
+  kill "$OLD_PID"
+  sleep 2
 fi
 
 mkdir -p logs
 
 echo "🚀 启动新服务: java -jar $JAR_FILE"
-nohup sudo java -jar "$JAR_FILE" > logs/out.log 2>&1 &
+nohup java -jar "$JAR_FILE" > logs/out.log 2>&1 &
 
 NEW_PID=$!
 
@@ -40,3 +38,4 @@ else
   cat logs/out.log
   exit 1
 fi
+
