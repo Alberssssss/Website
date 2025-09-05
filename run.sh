@@ -29,7 +29,6 @@ echo "🚀 启动新服务: java -jar $JAR_FILE"
 nohup sudo java -jar "$JAR_FILE" > logs/out.log 2>&1 &
 
 NEW_PID=$!
-
 # 等待几秒以便判断进程是否成功启动
 sleep 5
 
