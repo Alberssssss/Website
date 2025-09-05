@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8fb11d4-7186-4779-88cf-3cbc1aa3d316" name="Changes" comment="update properties">
+    <list default="true" id="b8fb11d4-7186-4779-88cf-3cbc1aa3d316" name="Changes" comment="update env">
       <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +123,7 @@
       <workItem from="1755293878399" duration="2944000" />
       <workItem from="1756777272611" duration="27757000" />
       <workItem from="1757039999607" duration="1475000" />
-      <workItem from="1757041485432" duration="4672000" />
+      <workItem from="1757041485432" duration="4874000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1750636921266</created>
@@ -438,7 +440,14 @@
       <option name="project" value="LOCAL" />
       <updated>1757046009958</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="update env">
+      <created>1757046233126</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1757046233126</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -489,7 +498,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update" />
     <MESSAGE value="remove fx" />
     <MESSAGE value="change port to 80" />
     <MESSAGE value="update ssl cert" />
@@ -514,7 +522,8 @@
     <MESSAGE value="update run.sh" />
     <MESSAGE value="update database structure" />
     <MESSAGE value="update properties" />
-    <option name="LAST_COMMIT_MESSAGE" value="update properties" />
+    <MESSAGE value="update env" />
+    <option name="LAST_COMMIT_MESSAGE" value="update env" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
