@@ -5,6 +5,16 @@
 APP_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$APP_DIR"
 
+# 读取 .env 中的数据库配置（若存在）
+if [ -f .env ]; then
+  export $(grep -v '^#' .env | xargs)
+fi
+
+if [ -z "$DB_PASSWORD" ]; then
+  echo "❌ 未配置数据库密码 (DB_PASSWORD)，请在 .env 文件中设置"
+  exit 1
+fi
+
 JAR_FILE=$(ls springfx-demo-*.jar 2>/dev/null | sort | tail -n1)
 if [ -z "$JAR_FILE" ]; then
   echo "❌ 没找到任何 springfx-demo-*.jar，退出"
