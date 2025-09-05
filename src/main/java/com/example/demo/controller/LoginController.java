@@ -44,12 +44,14 @@ public class LoginController {
             loginRecordRepository.save(new LoginRecord(username, false));
             return "login";
         }
+        if (reqRole == Role.ADMIN) {
+            return "redirect:/admin/login";
+        }
         Role finalReqRole = reqRole;
         return userRepository.findByUsername(username)
                 .filter(u -> u.getPassword().equals(password) && u.getRole() == finalReqRole)
                 .map(user -> {
                     loginRecordRepository.save(new LoginRecord(username, true));
-                    if (finalReqRole == Role.ADMIN) return "redirect:/admin";
                     if (finalReqRole == Role.TEACHER) return "redirect:/teacher";
                     return "redirect:/dashboard";
                 })

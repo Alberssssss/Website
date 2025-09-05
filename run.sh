@@ -27,5 +27,15 @@ echo "🚀 启动新服务: java -jar $JAR_FILE"
 nohup java -jar "$JAR_FILE" > logs/out.log 2>&1 &
 
 NEW_PID=$!
-echo "✅ 服务已启动 (PID=$NEW_PID)，日志：$APP_DIR/logs/out.log"
+
+# 等待几秒以便判断进程是否成功启动
+sleep 5
+
+if ps -p "$NEW_PID" > /dev/null; then
+  echo "✅ 服务已启动 (PID=$NEW_PID)，日志：$APP_DIR/logs/out.log"
+else
+  echo "❌ 服务启动失败，以下为日志内容："
+  cat logs/out.log
+  exit 1
+fi
 
