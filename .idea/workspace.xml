@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8fb11d4-7186-4779-88cf-3cbc1aa3d316" name="Changes" comment="update admin page">
-      <change beforePath="$PROJECT_DIR$/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run.sh" afterDir="false" />
+    <list default="true" id="b8fb11d4-7186-4779-88cf-3cbc1aa3d316" name="Changes" comment="update run.sh">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +121,7 @@
       <workItem from="1755293878399" duration="2944000" />
       <workItem from="1756777272611" duration="27757000" />
       <workItem from="1757039999607" duration="1475000" />
-      <workItem from="1757041485432" duration="1786000" />
+      <workItem from="1757041485432" duration="2432000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1750636921266</created>
@@ -410,7 +410,14 @@
       <option name="project" value="LOCAL" />
       <updated>1757043197637</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="update run.sh">
+      <created>1757043285856</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1757043285856</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -480,11 +487,11 @@
     <MESSAGE value="update home page" />
     <MESSAGE value="adding sudo" />
     <MESSAGE value="testing jenkins" />
-    <MESSAGE value="update run.sh" />
     <MESSAGE value="test jenkins" />
     <MESSAGE value="change database" />
     <MESSAGE value="update admin page" />
-    <option name="LAST_COMMIT_MESSAGE" value="update admin page" />
+    <MESSAGE value="update run.sh" />
+    <option name="LAST_COMMIT_MESSAGE" value="update run.sh" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
