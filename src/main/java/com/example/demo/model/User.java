@@ -15,8 +15,8 @@ public class User {
     private String username;
     private String password;
 
-    @Column(nullable = false)
-    private boolean admin;
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean admin = false;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -93,5 +93,11 @@ public class User {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void syncAdminFlag() {
+        this.admin = this.role == Role.ADMIN;
     }
 }
