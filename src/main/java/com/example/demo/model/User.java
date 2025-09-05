@@ -15,6 +15,9 @@ public class User {
     private String username;
     private String password;
 
+    @Column(nullable = false)
+    private boolean admin;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -29,6 +32,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.role = role;
+        this.admin = role == Role.ADMIN;
         this.fullName = fullName;
     }
 
@@ -64,6 +68,7 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+        this.admin = role == Role.ADMIN;
     }
 
     public String getFullName() {
@@ -80,5 +85,13 @@ public class User {
 
     public void setGrades(Set<Grade> grades) {
         this.grades = grades;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }
