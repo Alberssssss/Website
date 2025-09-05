@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8fb11d4-7186-4779-88cf-3cbc1aa3d316" name="Changes" comment="update run.sh">
+    <list default="true" id="b8fb11d4-7186-4779-88cf-3cbc1aa3d316" name="Changes" comment="update database structure">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -121,7 +121,7 @@
       <workItem from="1755293878399" duration="2944000" />
       <workItem from="1756777272611" duration="27757000" />
       <workItem from="1757039999607" duration="1475000" />
-      <workItem from="1757041485432" duration="2432000" />
+      <workItem from="1757041485432" duration="4104000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1750636921266</created>
@@ -417,7 +417,14 @@
       <option name="project" value="LOCAL" />
       <updated>1757043285856</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="update database structure">
+      <created>1757043938849</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1757043938849</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -491,7 +498,8 @@
     <MESSAGE value="change database" />
     <MESSAGE value="update admin page" />
     <MESSAGE value="update run.sh" />
-    <option name="LAST_COMMIT_MESSAGE" value="update run.sh" />
+    <MESSAGE value="update database structure" />
+    <option name="LAST_COMMIT_MESSAGE" value="update database structure" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
